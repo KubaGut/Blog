@@ -19,11 +19,34 @@ class UserController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('default/indexUser.html.twig');
+        return $this->render('default/user.html.twig');
+    }
+    /**
+     * @Route("/user/post/show/{postId}", name="show")
+     */
+    public function showAction($postId, Request $request)
+    {
+        $post = new Posts();
+        $em=$this->getDoctrine()->getManager();
+        $post = $em->getRepository('AppBundle:Posts')->findOneById($postId);
+        return $this->render('default/userPostShow.html.twig', array('post' => $post));
+    }
+    /**
+     * @Route("/user/post/delete/{postId}", name="delete")
+     */
+    public function deleteAction($postId)
+    {
+        $post = new Posts();
+        $em=$this->getDoctrine()->getManager();
+        $post = $em->getRepository('AppBundle:Posts')->findOneById($postId);
+        $em->remove($post);
+        $em->flush();
+        return $this->render('default/user.html.twig');
     }
 
+
     /**
-     * @Route("/user/add", name="add")
+     * @Route("/user/post/add", name="add")
      */
     public function addPostAction(Request $request){
 
@@ -44,10 +67,10 @@ class UserController extends Controller
             return $this->redirectToRoute('user');
         }
 
-        return $this->render('default/addPost.html.twig', array('form'=> $form->createView()) );
+        return $this->render('default/userPostAdd.html.twig', array('form'=> $form->createView()) );
     }
     /**
-     * @Route("/user/edit/{postId}", name="editPost")
+     * @Route("/user/post/edit/{postId}", name="editPost")
      */
     public function editPostAction($postId, Request $request) {
 
@@ -70,7 +93,7 @@ class UserController extends Controller
 
             return $this->redirectToRoute('user');
         }
-        return $this->render('default/editPost.html.twig', array('form'=> $form->createView()) );
+        return $this->render('default/userPostEdit.html.twig', array('form'=> $form->createView()) );
     }
 
 }

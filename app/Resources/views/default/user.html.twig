@@ -6,10 +6,10 @@
     HELLO {{ app.user.username }} <br>
 
     {% for posts in app.user.posts %}
-    <a href="/user/edit/{{posts.id}}"> {{posts.title}} </a>
-        <br>
+    <a href="/user/post/show/{{posts.id}}"> {{posts.title}} </a>
+
     {% endfor %}
 
     <br>
-    <a href="/user/add"> Add new post </a>
+    <a href="/user/post/add"> Add new post </a>
 {% endblock %}

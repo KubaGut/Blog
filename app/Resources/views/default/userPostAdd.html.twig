@@ -1,6 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends 'default/user.html.twig' %}
 
 {% block body %}
+    {{ parent() }}
+    <br>
     <div> PLEASE ADD POST</div>
     {{ form_start(form) }}
     {{ form_widget(form) }}

@@ -1,0 +1,13 @@
+{% extends 'default/user.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <br>
+    Title:{{ post.title }}
+    <br>
+    Text: {{ post.text }}
+    <br>
+    <a href="/user/post/edit/{{post.id}}"> EDIT </a>
+    <a href="/user/post/delete/{{post.id}}"> DELETE </a>
+
+{% endblock %}

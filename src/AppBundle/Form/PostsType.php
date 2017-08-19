@@ -19,7 +19,7 @@ class PostsType extends AbstractType
         $builder
             ->add('title')
             ->add('text', TextareaType::class)
-            ->add('Add Post', SubmitType::class);
+            ->add('Save', SubmitType::class);
     }
     
     /**
