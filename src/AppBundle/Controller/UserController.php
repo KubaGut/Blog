@@ -46,6 +46,32 @@ class UserController extends Controller
 
         return $this->render('default/addPost.html.twig', array('form'=> $form->createView()) );
     }
+    /**
+     * @Route("/user/edit/{postId}", name="editPost")
+     */
+    public function editPostAction($postId, Request $request) {
+
+        $Post = new Posts();
+        $em=$this->getDoctrine()->getManager();
+        $Post->setTitle($em->getRepository('AppBundle:Posts')->findOneById($postId)->getTitle());
+        $Post->setText($em->getRepository('AppBundle:Posts')->findOneById($postId)->getText());
+        $editedPost = new Posts();
+        $form = $this->createForm(PostsType::class, $Post);
+
+        $form->handleRequest($request);
+
+        if($form->issubmitted() && $form->isValid()) {
+
+            $editedPost=$em->getRepository('AppBundle:Posts')->findOneById($postId);
+            $editedPost->setText($Post->getText());
+            $editedPost->setTitle($Post->getTitle());
+            $em->flush();
+
+
+            return $this->redirectToRoute('user');
+        }
+        return $this->render('default/editPost.html.twig', array('form'=> $form->createView()) );
+    }
 
 }
 

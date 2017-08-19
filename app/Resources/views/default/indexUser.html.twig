@@ -4,5 +4,12 @@
     {{ parent() }}
     <br>
     HELLO {{ app.user.username }} <br>
+
+    {% for posts in app.user.posts %}
+    <a href="/user/edit/{{posts.id}}"> {{posts.title}} </a>
+        <br>
+    {% endfor %}
+
+    <br>
     <a href="/user/add"> Add new post </a>
 {% endblock %}
