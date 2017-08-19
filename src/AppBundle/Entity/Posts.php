@@ -37,13 +37,23 @@ class Posts{
     private $text;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $file;
 
     /** @ORM\ManyToOne(targetEntity="User", inversedBy="posts")
      *@ORM\JoinColumn(name="user_id" , referencedColumnName="id")*/
     private $user;
+
+    /**
+     * @param mixed $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+
 
     /**
      * @return mixed
@@ -67,14 +77,6 @@ class Posts{
     public function getDate()
     {
         return $this->date;
-    }
-
-    /**
-     * @param mixed $date
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
     }
 
     /**

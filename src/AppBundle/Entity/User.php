@@ -11,6 +11,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -25,9 +26,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
  private $id;
 
  /**
-  * @ORM\Column(type="string")
+  * @Assert\NotBlank()
+  * @ORM\Column(unique=true,type="string")
   */
- private $userName;
+ private $username;
 
  /**
   * @ORM\Column(type="string")
@@ -47,29 +49,34 @@ use Symfony\Component\Security\Core\User\UserInterface;
  /**
   * @ORM\Column(type="string")
   */
- private $role;
+ private $roles;
 
  /** @ORM\OneToMany(targetEntity="Posts", mappedBy="user") */
  private $posts;
 
-    public function _construct() {
+     private $isActive;
+
+     public function __construct()
+     {
+         $this->isActive = true;
+         // may not be needed, see section on salt below
+         // $this->salt = md5(uniqid(null, true));
+     }
+
+ public function _construct() {
         $this->posts =new ArrayCollection();
     }
 
-     /**
-      * @return mixed
-      */
-     public function getRole()
+
+     public function getRoles()
      {
-         return $this->role;
+         return array($this->roles);
      }
 
-     /**
-      * @param mixed $role
-      */
-     public function setRole($role)
+
+     public function setRole($roles)
      {
-         $this->role = $role;
+         $this->roles = $roles;
      }
      /**
       * @return mixed
@@ -90,17 +97,17 @@ use Symfony\Component\Security\Core\User\UserInterface;
      /**
       * @return mixed
       */
-     public function getUserName()
+     public function getUsername()
      {
-         return $this->userName;
+         return $this->username;
      }
 
      /**
-      * @param mixed $userName
+      * @param mixed $username
       */
-     public function setUserName($userName)
+     public function setUsername($username)
      {
-         $this->userName = $userName;
+         $this->username = $username;
      }
 
      /**
@@ -167,14 +174,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
          $this->posts = $posts;
      }
 
-     public function getRoles()
-     {
-         // TODO: Implement getRoles() method.
-     }
+
 
      public function getSalt()
      {
-         // TODO: Implement getSalt() method.
+        return null;
      }
 
 
@@ -193,7 +197,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
      {
          return serialize(array(
              $this->id,
-             $this->userName,
+             $this->username,
              $this->password
          ));
      }
@@ -211,7 +215,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
      {
          list(
              $this->id,
-             $this->userName,
+             $this->username,
              $this->password
             )
              =unserialize($serialized);

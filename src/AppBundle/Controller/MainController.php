@@ -47,7 +47,7 @@ class MainController extends Controller
 
         if($form->issubmitted() && $form->isValid()) {
             $User->setRole("ROLE_USER");
-            $encoded = $encoder->encodePassword(new User(), $User->getPassword());
+            $encoded = $encoder->encodePassword($User, $User->getPassword());
             $User->setPassword($encoded);
             $em=$this->getDoctrine()->getManager();
             $em->persist($User);

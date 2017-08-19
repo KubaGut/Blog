@@ -1,1 +1,8 @@
-{% extends 'index.html.twig' %}
+{% extends 'default/index.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <br>
+    HELLO {{ app.user.username }} <br>
+    <a href="/user/add"> Add new post </a>
+{% endblock %}
