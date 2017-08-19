@@ -6,11 +6,11 @@
     {% endif %}
 
     <form action="{{ path('login') }}" method="post">
-       <label for="username"> LOGIN </label>
+       <label for="username"> User Name </label>
        <input type="text" id="username" name="_username" value="{{ last_username }}"/>
+        <br>
 
-
-       <label for="password"> PASSWORD </label>
+       <label for="password"> Password </label>
        <input type="password" id="password" name="_password" />
 
         <input type="hidden" name="_target_path" value="/user" />

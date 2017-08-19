@@ -20,7 +20,7 @@ class UserType extends AbstractType
                 ->add('phoneNumber')
                 ->add('password', PasswordType::class)
                 ->add('email', EmailType::class)
-                ->add('Register', SubmitType::class);
+                ->add('Save', SubmitType::class);
     }
     
     /**

@@ -1,0 +1,9 @@
+{% extends 'default/user.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div> PLEASE EDIT YOUR PERSONAL DETAILS </div>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

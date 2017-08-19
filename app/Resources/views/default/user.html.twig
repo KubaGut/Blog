@@ -1,8 +1,10 @@
 {% extends 'default/index.html.twig' %}
 
 {% block body %}
+    <a href="/user/edit"> EDIT YOUR DATA </a>
     {{ parent() }}
     <br>
+
     HELLO {{ app.user.username }} <br>
 
     {% for posts in app.user.posts %}

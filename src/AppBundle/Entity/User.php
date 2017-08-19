@@ -74,6 +74,10 @@ use Symfony\Component\Validator\Constraints as Assert;
      }
 
 
+
+     /**
+      * @param mixed $role
+      */
      public function setRole($roles)
      {
          $this->roles = $roles;
