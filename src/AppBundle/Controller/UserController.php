@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
@@ -93,6 +94,15 @@ class UserController extends Controller
         if($form->issubmitted() && $form->isValid()) {
             $Post->setUser($this->getUser());
             $Post->setDate(new DateTime());
+
+            $file = $Post->getBrochure();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $file->move(
+                $this->getParameter('brochures_directory'),
+                $fileName
+            );
+            $Post->setBrochure($fileName);
+
             $em=$this->getDoctrine()->getManager();
             $em->persist($Post);
             $em->flush();

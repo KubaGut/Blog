@@ -8,6 +8,7 @@
 
 namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -36,14 +37,34 @@ class Posts{
      */
     private $text;
 
+
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string")
+     *
+     * @Assert\File(mimeTypes={ "application/pdf" })
      */
-    private $file;
+    private $brochure;
+
 
     /** @ORM\ManyToOne(targetEntity="User", inversedBy="posts")
      *@ORM\JoinColumn(name="user_id" , referencedColumnName="id")*/
     private $user;
+
+    /**
+     * @return mixed
+     */
+    public function getBrochure()
+    {
+        return $this->brochure;
+    }
+
+    /**
+     * @param mixed $brochure
+     */
+    public function setBrochure($brochure)
+    {
+        $this->brochure = $brochure;
+    }
 
     /**
      * @param mixed $date
@@ -52,8 +73,6 @@ class Posts{
     {
         $this->date = $date;
     }
-
-
 
     /**
      * @return mixed
@@ -109,22 +128,6 @@ class Posts{
     public function setText($text)
     {
         $this->text = $text;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFile()
-    {
-        return $this->file;
-    }
-
-    /**
-     * @param mixed $file
-     */
-    public function setFile($file)
-    {
-        $this->file = $file;
     }
 
     /**
