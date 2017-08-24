@@ -53,8 +53,30 @@ use Symfony\Component\Validator\Constraints as Assert;
 
  /** @ORM\OneToMany(targetEntity="Posts", mappedBy="user") */
  private $posts;
+ /**
+  * @var boolean
+  * @ORM\column(type="boolean")
+  */
+ private $active = false;
 
-     private $isActive;
+     /**
+      * @return mixed
+      */
+     public function getActive()
+     {
+         return $this->active;
+     }
+
+     /**
+      * @param mixed $active
+      */
+     public function setActive($active)
+     {
+         $this->active = $active;
+     }
+
+
+ private $isActive;
 
      public function __construct()
      {
@@ -72,7 +94,6 @@ use Symfony\Component\Validator\Constraints as Assert;
      {
          return array($this->roles);
      }
-
 
 
      /**
