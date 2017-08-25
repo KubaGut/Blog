@@ -7,6 +7,8 @@
     <br>
     Text: {{ post.text }}
     <br>
+    <a href="{{ asset('uploads/brochures/' ~ post.brochure) }}">View pdf</a>
+    <br>
     <a href="/user/post/edit/{{post.id}}"> EDIT </a>
     <a href="/user/post/delete/{{post.id}}"> DELETE </a>
 
