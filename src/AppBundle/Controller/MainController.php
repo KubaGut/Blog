@@ -50,7 +50,7 @@ class MainController extends Controller
             $User->setRole("ROLE_USER");
             $encoded = $encoder->encodePassword($User, $User->getPassword());
             $User->setPassword($encoded);
-            $User->setActive(false);
+            $User->setIsActive(false);
             $em=$this->getDoctrine()->getManager();
             $em->persist($User);
             $em->flush();
@@ -80,7 +80,7 @@ class MainController extends Controller
         $user = new User();
         $em=$this->getDoctrine()->getManager();
         $user = $em->getRepository('AppBundle:User')->findOneById($id);
-        $user->setActive(true);
+        $user->setIsActive(true);
 
         $em->flush();
         return $this->render('default/index.html.twig' );
