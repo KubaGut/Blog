@@ -21,10 +21,16 @@ class UserController extends Controller
     /**
      * @Route("/user", name="user")
      */
-    public function indexAction()
-    {
+    public function indexAction(){
+        foreach ($this->getUser()->getRoles() as $Role){
+            if ($Role == "ROLE_ADMIN") {
+                return $this->redirectToRoute('admin');
+            }
+        }
+
         return $this->render('default/user.html.twig');
     }
+
     /**
      * @Route("/user/edit", name="userEdit")
      */
@@ -56,6 +62,7 @@ class UserController extends Controller
 
         return $this->render('default/userEdit.html.twig', array('form'=> $form->createView()));
     }
+
     /**
      * @Route("/user/post/show/{postId}", name="show")
      */
@@ -66,6 +73,7 @@ class UserController extends Controller
         $post = $em->getRepository('AppBundle:Posts')->findOneById($postId);
         return $this->render('default/userPostShow.html.twig', array('post' => $post));
     }
+
     /**
      * @Route("/user/post/delete/{postId}", name="delete")
      */
@@ -79,7 +87,6 @@ class UserController extends Controller
         return $this->render('default/user.html.twig');
     }
 
-
     /**
      * @Route("/user/post/add", name="add")
      */
@@ -88,12 +95,20 @@ class UserController extends Controller
         $Post = new Posts();
 
         $form = $this->createForm(PostsType::class, $Post);
-
         $form->handleRequest($request);
+
+        $Date = new DateTime("midnight");
+        $Posts = $this->getUser()->getPosts();
+        foreach ($Posts as $post) {
+            if ($post->getDate() == $Date) {
+                $this->addFlash('notice', "You can add one post per day");
+                return $this->redirectToRoute('user');
+            }
+        }
 
         if($form->issubmitted() && $form->isValid()) {
             $Post->setUser($this->getUser());
-            $Post->setDate(new DateTime());
+            $Post->setDate(new DateTime("midnight"));
 
             $file = $Post->getBrochure();
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
@@ -113,6 +128,7 @@ class UserController extends Controller
 
         return $this->render('default/userPostAdd.html.twig', array('form'=> $form->createView()) );
     }
+
     /**
      * @Route("/user/post/edit/{postId}", name="editPost")
      */

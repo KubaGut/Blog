@@ -58,9 +58,7 @@ class MainController extends Controller
             $transport = new \Swift_SmtpTransport('smtp.gmail.com', 465,'ssl');
             $transport->setUsername('gutkowski.jakub1');
             $transport->setPassword('Zyxw1234');
-
             $mailer = new \Swift_Mailer($transport);
-
             $message = (new \Swift_Message('Blog Authentication'))
             ->setFrom('gutkowski.jakub1@gmail.com')
             ->setTo($User->getEmail())

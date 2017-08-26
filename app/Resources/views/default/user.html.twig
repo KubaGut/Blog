@@ -15,4 +15,9 @@
 
     <br>
     <a href="/user/post/add"> Add new post </a>
+    <br>
+    {% for massage in app.flashes('notice') %}
+        {{ massage }}
+    {% endfor %}
+
 {% endblock %}
