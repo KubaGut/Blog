@@ -2,8 +2,12 @@
 
 {% block body %}
     {{ parent() }}
-    <div> PLEASE EDIT POST</div>
+    <br>
+    <div class="Lable" style="color: green"> Please edit your post</div>
+    <br>
+    <div class="Lable">
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
+    </div>
 {% endblock %}

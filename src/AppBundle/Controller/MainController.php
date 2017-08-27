@@ -22,6 +22,13 @@ class MainController extends Controller
     }
 
     /**
+     * @Route("/home", name="home")
+     */
+    public function homeAction(){
+        return $this->render('default/home.html.twig' );
+    }
+
+    /**
      * @Route("/login", name="login")
      */
     public function loginAction(Request $request, AuthenticationUtils $authUtils){

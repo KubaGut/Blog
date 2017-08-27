@@ -3,9 +3,11 @@
 {% block body %}
     {{ parent() }}
     <br>
-    <div> Please register your data</div>
+    <div class="Lable"> Please register your data</div>
     <br>
+    <div class="Lable">
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
+    </div>
 {% endblock %}

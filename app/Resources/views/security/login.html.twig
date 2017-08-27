@@ -3,25 +3,25 @@
 {% block body %}
     {{ parent() }}
     <br>
-    Please log in
+    <div class="Lable"> Please log in </div>
     <br>
-    <br>
-    {%  if error %}
-        <div> {{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+
 
     <form action="{{ path('login') }}" method="post">
-       <label for="username"> User Name </label>
+       <label class="Lable" for="username"> User Name </label>
        <input type="text" id="username" name="_username" value="{{ last_username }}"/>
         <br>
 
-       <label for="password"> Password </label>
+       <label class="Lable" for="password"> Password </label>
        <input type="password" id="password" name="_password" />
 
         <input type="hidden" name="_target_path" value="/user" />
+        <br>
+       <button style="margin-left:150px; width: 80px;"  type="submit">Log In</button>
 
-       <button type="submit">LOG IN</button>
-
+        {%  if error %}
+            <div style="margin-left:150px; color:red"> {{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
 
     </form>
 {% endblock %}

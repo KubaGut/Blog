@@ -3,15 +3,29 @@
 {% block body %}
     {{ parent() }}
     <br>
-    LIST OF ALL USERS
-    <br>
+    <div class="Lable">List of all users in Blog </div>
+    <div class="Lable">
+        <table>
+            <thead>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            </thead>
+            <tbody>
     {% for user in  users  %}
-        {{ user.username }}
-        {{ user.email }}
-        {% for role in  user.roles  %}
-        {{ role }}
-        {% endfor %}
+        <tr>
+         <td>{{ user.username }}</td>
+         <td>{{ user.email }}</td>
+         <td>
+            {% for role in  user.roles  %}
+            {{ role }}
+            {% endfor %}
+        </td>
+        </tr>
         <br>
     {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}
