@@ -101,7 +101,7 @@ class UserController extends Controller
         $Posts = $this->getUser()->getPosts();
         foreach ($Posts as $post) {
             if ($post->getDate() == $Date) {
-                $this->addFlash('notice', "You can add one post per day");
+                $this->addFlash('notice', "Sorry - one post per day");
                 return $this->redirectToRoute('user');
             }
         }

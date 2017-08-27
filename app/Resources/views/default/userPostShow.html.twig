@@ -3,13 +3,15 @@
 {% block body %}
     {{ parent() }}
     <br>
-    Title:{{ post.title }}
-    <br>
-    Text: {{ post.text }}
-    <br>
-    <a href="{{ asset('uploads/brochures/' ~ post.brochure) }}">View pdf</a>
-    <br>
-    <a href="/user/post/edit/{{post.id}}"> EDIT </a>
-    <a href="/user/post/delete/{{post.id}}"> DELETE </a>
+    <div class="Lable">Title </div>
+    <div id="postTitle"> {{ post.title }} </div>
+    <div class="Lable">Text </div>
+    <div id="postText"> {{ post.text }} </div>
 
+    <ul id="edit">
+        <li id="editLi"><a href="{{ asset('uploads/brochures/' ~ post.brochure) }}">View pdf</a> </li>
+        <li id="editLi2" style="float:right"><a href="/user/post/delete/{{post.id}}"> Delete </a></li>
+        <li id="editLi2" style="float:right"><a href="/user/post/edit/{{post.id}}"> Edit </a> </li>
+
+    </ul>
 {% endblock %}

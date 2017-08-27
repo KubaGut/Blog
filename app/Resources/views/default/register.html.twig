@@ -1,7 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'default/index.html.twig' %}
 
 {% block body %}
-    <div> PLEASE REGISTER YOURSELF</div>
+    {{ parent() }}
+    <br>
+    <div> Please register your data</div>
+    <br>
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}

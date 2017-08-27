@@ -1,23 +1,28 @@
 {% extends 'default/index.html.twig' %}
 
 {% block body %}
-    <a href="/user/edit"> EDIT YOUR DATA </a>
-    {{ parent() }}
-    <a href="/logout"> LOGOUT </a>
+    <ul>
+        <li> <a href="/index"> Home </a></li>
+        <li> <a href="/user/post/add"> Add new post </a></li>
+        <li> <a href="/user/edit"> Edit your account </a></li>
+        <li style="float:right"> <a class="active" href="/index"> Log Out </a></li>
+        <li style="float:right"> <a class="active" href="/register"> Register </a></li>
+        <li style="float:right"> <a class="active" href="/login"> Log In </a></li>
+
+    </ul>
+
     <br>
+    <div id="Hello">Hello {{ app.user.username }} !! </div>
+    {% for massage in app.flashes('notice') %}
+        {{ massage }}<br>
+    {% endfor %}
 
-    HELLO {{ app.user.username }} <br>
-
+    <div class="Lable">Your posts </div>
+    <div class="Lable">
     {% for posts in app.user.posts %}
     <a href="/user/post/show/{{posts.id}}"> {{posts.title}} </a>
-
     {% endfor %}
+    </div>
 
-    <br>
-    <a href="/user/post/add"> Add new post </a>
-    <br>
-    {% for massage in app.flashes('notice') %}
-        {{ massage }}
-    {% endfor %}
 
 {% endblock %}
