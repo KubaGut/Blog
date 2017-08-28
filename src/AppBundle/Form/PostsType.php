@@ -20,7 +20,7 @@ class PostsType extends AbstractType
         $builder
             ->add('title')
             ->add('text', TextareaType::class)
-            ->add('brochure', FileType::class, array('label' => 'Brochure (PDF file)'))
+            ->add('brochure', FileType::class, array('label' => 'Brochure (file)'))
             ->add('Save', SubmitType::class);
     }
     

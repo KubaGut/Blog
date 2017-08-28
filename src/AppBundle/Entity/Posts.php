@@ -41,7 +41,7 @@ class Posts{
     /**
      * @ORM\Column(type="string")
      *
-     * @Assert\File(mimeTypes={ "application/pdf" })
+     * @Assert\File(mimeTypes={ "application/pdf", "image/jpeg","image/png"})
      */
     private $brochure;
 
