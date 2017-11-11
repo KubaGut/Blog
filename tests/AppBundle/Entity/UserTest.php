@@ -20,10 +20,9 @@ class UserTest extends TestCase
         $user = new User();
         $user->setId(1);
         $this->assertEquals(1, $user->getId());
-
     }
 
-    public function testGetAndGetUsername()
+    public function testGetAndSetUsername()
     {
         $user = new User();
         $user->setUsername('Jakub');
@@ -36,10 +35,5 @@ class UserTest extends TestCase
         $user->setPassword('123');
         $this->assertEquals($user->getPassword(), '123');
     }
-
-
-
-
-
 
 }
