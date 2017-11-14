@@ -88,12 +88,10 @@ use Symfony\Component\Validator\Constraints as Assert;
          $this->isActive = $isActive;
      }
 
-
      public function getRoles()
      {
          return array($this->roles);
      }
-
 
      /**
       * @param mixed $role
@@ -197,8 +195,6 @@ use Symfony\Component\Validator\Constraints as Assert;
      {
          $this->posts = $posts;
      }
-
-
 
      public function getSalt()
      {
