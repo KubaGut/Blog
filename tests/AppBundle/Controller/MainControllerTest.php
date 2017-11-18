@@ -9,6 +9,7 @@
 namespace Tests\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use AppBundle\Entity\User;
 
 
 class MainControllerTest extends WebTestCase
@@ -33,5 +34,90 @@ class MainControllerTest extends WebTestCase
 
         $link = $crawler->filter('a:contains("Register")')->link();
         $this->assertEquals('http://localhost/register', $client->click($link)->getUri());
+
+        $link = $crawler->filter('a:contains("Log In")')->link();
+        $this->assertEquals('http://localhost/login', $client->click($link)->getUri());
     }
+
+    public function testHomeActionStatusCode()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/home');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+
+    public function testHomePageContent()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/home');
+        $this->assertGreaterThan(0, $crawler->filter('div:contains("Go")')->count() );
+    }
+
+    public function testLoginActionStatusCode()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/login');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+
+    public function testLogin()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/login');
+
+        $form = $crawler->selectButton('Log In')->form();
+        $form['_username'] = 'login1';
+        $form['_password'] = 'haslo1';
+        $client->submit($form);
+        $crawler = $client->followRedirect();
+
+        $this->assertEquals(0, $crawler->filter('.error')->count());
+        $this->assertEquals('http://localhost/user', $crawler->getUri());
+    }
+
+    public function testRegisterActionStatusCode()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/register');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+
+    public function testRegisterAction()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/register');
+
+        $form = $crawler->selectButton('appbundle_user[Save]')->form();
+        $form['appbundle_user[userName]'] = 'Kazia';
+        $form['appbundle_user[phoneNumber]'] = '123-234-234';
+        $form['appbundle_user[password]'] = 'Kazia';
+        $form['appbundle_user[email]'] = 'jakub_gutkowski@wp.pl';
+        $client->submit($form);
+        $crawler = $client->followRedirect();
+        $this->assertEquals('http://localhost/index', $crawler->getUri());
+    }
+
+    public function testRegisterActionInvalidEmail()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/register');
+
+        $form = $crawler->selectButton('appbundle_user[Save]')->form();
+        $form['appbundle_user[userName]'] = 'Kazia';
+        $form['appbundle_user[phoneNumber]'] = '123-234-234';
+        $form['appbundle_user[password]'] = 'Kazia';
+        $form['appbundle_user[email]'] = 'InvalidEMail';
+        $client->submit($form);
+        $this->assertEquals('http://localhost/register', $crawler->getUri());
+    }
+
+    public function testConfirmationAction()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/confirmation/102');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+
+
+
 }

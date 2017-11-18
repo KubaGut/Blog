@@ -34,7 +34,6 @@ class MainController extends Controller
     public function loginAction(Request $request, AuthenticationUtils $authUtils){
 
         $error = $authUtils->getlastAuthenticationError();
-
         $lastUserName = $authUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', array(
@@ -64,7 +63,7 @@ class MainController extends Controller
 
             $transport = new \Swift_SmtpTransport('smtp.gmail.com', 465,'ssl');
             $transport->setUsername('gutkowski.jakub1');
-            $transport->setPassword('Zyxw1234');
+            $transport->setPassword('bombolada6');
             $mailer = new \Swift_Mailer($transport);
             $message = (new \Swift_Message('Blog Authentication'))
             ->setFrom('gutkowski.jakub1@gmail.com')
