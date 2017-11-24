@@ -8,6 +8,8 @@
 
 namespace Tests\AppBundle\Controller;
 
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use AppBundle\Entity\User;
 
@@ -88,7 +90,7 @@ class MainControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/register');
 
         $form = $crawler->selectButton('appbundle_user[Save]')->form();
-        $form['appbundle_user[userName]'] = 'Kazia';
+        $form['appbundle_user[userName]'] = 'Mariola3';
         $form['appbundle_user[phoneNumber]'] = '123-234-234';
         $form['appbundle_user[password]'] = 'Kazia';
         $form['appbundle_user[email]'] = 'jakub_gutkowski@wp.pl';
@@ -103,20 +105,34 @@ class MainControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/register');
 
         $form = $crawler->selectButton('appbundle_user[Save]')->form();
-        $form['appbundle_user[userName]'] = 'Kazia';
+        $form['appbundle_user[userName]'] = "Zdzisiu3";
         $form['appbundle_user[phoneNumber]'] = '123-234-234';
         $form['appbundle_user[password]'] = 'Kazia';
-        $form['appbundle_user[email]'] = 'InvalidEMail';
+        $form['appbundle_user[email]'] = 'jakub_gutkowskiwp.pl';
         $client->submit($form);
         $this->assertEquals('http://localhost/register', $crawler->getUri());
+        //$this->assertEquals(1, $crawler->filter('.error')->count());
     }
 
     public function testConfirmationAction()
     {
+        $user = new User();
+        $user->setUsername('Marek');
+
+        $userRepository = $this->createMock(ObjectRepository::class);
+        $userRepository->expects($this->any())->method('findOneById(1)')->willReturn($user);
+
+        $em = $this->createMock(ObjectManager::class);
+        $em->expects($this->any())->method('getRepository')->willReturn($userRepository);
+
         $client = static::createClient();
-        $crawler = $client->request('GET', '/confirmation/102');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $crawler = $client->request('GET', '/confirmation/1');
+        $crawler = $client->followRedirect();
+
+        $this->assertEquals('http://localhost/index2', $crawler->getUri());
+        $this->assertEquals($user->isActive(), true);
     }
+
 
 
 

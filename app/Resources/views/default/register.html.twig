@@ -9,5 +9,14 @@
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
+
     </div>
+
+    {% if form.vars.errors|length %}
+
+     <div class="error" style="margin-left:150px; color:red"> {{  form_errors(form) }}</div>
+
+    {% endif %}
+
+
 {% endblock %}

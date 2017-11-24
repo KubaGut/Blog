@@ -83,7 +83,8 @@ class MainController extends Controller
     public function confirmationAction($id, Request $request) {
         $user = new User();
         $em=$this->getDoctrine()->getManager();
-        $user = $em->getRepository('AppBundle:User')->findOneById($id);
+        $userRepository = $em->getRepository('AppBundle:User');
+        $user = $userRepository->findOneById($id);
         $user->setIsActive(true);
 
         $em->flush();

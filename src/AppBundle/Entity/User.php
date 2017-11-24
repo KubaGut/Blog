@@ -38,6 +38,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  private $phoneNumber;
 
  /**
+  * @Assert\NotBlank()
   * @ORM\Column(type="string")
   */
  private $password;
