@@ -12,10 +12,29 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use AppBundle\Entity\User;
+use AppBundle\DataFixtures\ORM\Fixtures;
+
 
 
 class MainControllerTest extends WebTestCase
 {
+    /**
+     * @var \Doctrine\ORM\EntityManager
+     */
+    private $em;
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function setUp()
+    {
+        $kernel = self::bootKernel();
+
+        $this->em = $kernel->getContainer()
+            ->get('doctrine')
+            ->getManager();
+    }
+
     public function testIndexActionStatusCode()
     {
         $client = static::createClient();
@@ -62,7 +81,7 @@ class MainControllerTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
-    public function testLogin()
+  /*  public function testLogin()
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/login');
@@ -76,14 +95,14 @@ class MainControllerTest extends WebTestCase
         $this->assertEquals(0, $crawler->filter('.error')->count());
         $this->assertEquals('http://localhost/user', $crawler->getUri());
     }
-
+*/
     public function testRegisterActionStatusCode()
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/register');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
-
+/*
     public function testRegisterAction()
     {
         $client = static::createClient();
@@ -113,24 +132,14 @@ class MainControllerTest extends WebTestCase
         $this->assertEquals('http://localhost/register', $crawler->getUri());
         //$this->assertEquals(1, $crawler->filter('.error')->count());
     }
-
+*/
     public function testConfirmationAction()
     {
-        $user = new User();
-        $user->setUsername('Marek');
-
-        $userRepository = $this->createMock(ObjectRepository::class);
-        $userRepository->expects($this->any())->method('findOneById(1)')->willReturn($user);
-
-        $em = $this->createMock(ObjectManager::class);
-        $em->expects($this->any())->method('getRepository')->willReturn($userRepository);
-
         $client = static::createClient();
-        $crawler = $client->request('GET', '/confirmation/1');
-        $crawler = $client->followRedirect();
+        $crawler = $client->request('GET', '/confirmation/297');
 
-        $this->assertEquals('http://localhost/index2', $crawler->getUri());
-        $this->assertEquals($user->isActive(), true);
+        $this->assertEquals($this->em->getRepository(User::class)->findOneById(297)->isActive(), true);
+
     }
 
 
